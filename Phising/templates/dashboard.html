@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>📊 Tableau de Bord - Simulateur de Phishing</h2>
+
+    <!-- Statistics Overview -->
+    <div class="stats-overview">
+        <h3>Vue d'ensemble</h3>
+        <div class="stats-grid-main">
+            <div class="stat-card">
+                <div class="stat-icon">📧</div>
+                <div class="stat-content">
+                    <div class="stat-value">{{ stats.total_campaigns }}</div>
+                    <div class="stat-title">Campagnes totales</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-content">
+                    <div class="stat-value">{{ stats.active_campaigns }}</div>
+                    <div class="stat-title">Campagnes actives</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-content">
+                    <div class="stat-value">{{ stats.total_users }}</div>
+                    <div class="stat-title">Utilisateurs cibles</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-content">
+                    <div class="stat-value">{{ stats.total_events }}</div>
+                    <div class="stat-title">Événements trackés</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <a href="/campaign/create" class="btn-primary-large">
+            ➕ Créer une nouvelle campagne
+        </a>
+    </div>
+
+    <!-- Campaigns List -->
+    <div class="campaigns-section">
+        <h3>📋 Toutes les campagnes</h3>
+        
+        {% if campaigns %}
+        <!-- Search and Export Controls -->
+        <div class="table-controls">
+            <input type="text" 
+                   id="campaigns-search" 
+                   placeholder="🔍 Rechercher une campagne..." 
+                   class="search-input">
+            <button onclick="exportTableToCSV('campaigns-table', 'campagnes_' + new Date().toISOString().split('T')[0] + '.csv')" 
+                    class="btn-export">
+                📥 Exporter CSV
+            </button>
+        </div>
+        
+        <div class="campaigns-table-container">
+            <table class="campaigns-table" id="campaigns-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('campaigns-table', 0, true)" style="cursor: pointer;" title="Cliquer pour trier">
+                            ID ⇅
+                        </th>
+                        <th onclick="sortTable('campaigns-table', 1, true)" style="cursor: pointer;" title="Cliquer pour trier">
+                            Nom de la campagne ⇅
+                        </th>
+                        <th onclick="sortTable('campaigns-table', 2, true)" style="cursor: pointer;" title="Cliquer pour trier">
+                            Statut ⇅
+                        </th>
+                        <th onclick="sortTable('campaigns-table', 3, true)" style="cursor: pointer;" title="Cliquer pour trier">
+                            Date de création ⇅
+                        </th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in campaigns %}
+                    <tr id="campaign-row-{{ c.campaign_id }}">
+                        <td>{{ c.campaign_id }}</td>
+                        <td>
+                            <a href="/campaign/{{ c.campaign_id }}" class="campaign-link">
+                                {{ c.campaign_name }}
+                            </a>
+                        </td>
+                        <td>
+                            <span class="status-badge status-{{ c.campaign_status }}">
+                                {{ c.campaign_status }}
+                            </span>
+                        </td>
+                        <td>{{ c.campaign_created_at }}</td>
+                        <td>
+                            <a href="/campaign/{{ c.campaign_id }}" class="btn-small">
+                                👁️ Voir détails
+                            </a>
+                            <button onclick="deleteCampaign('{{ c.campaign_id }}', '{{ c.campaign_name }}')" 
+                                    class="btn-delete-small" 
+                                    title="Supprimer cette campagne">
+                                🗑️
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state-card">
+            <p>🚀 Aucune campagne trouvée.</p>
+            <p>Commencez par créer votre première campagne de sensibilisation au phishing !</p>
+            <a href="/campaign/create" class="btn-primary">Créer maintenant</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Recent Events -->
+    {% if recent_events %}
+    <div class="recent-events-section">
+        <h3>🕐 Événements récents</h3>
+        
+        <!-- Search and Export for Events -->
+        <div class="table-controls">
+            <input type="text" 
+                   id="events-search" 
+                   placeholder="🔍 Rechercher un événement..." 
+                   class="search-input">
+            <button onclick="exportTableToCSV('events-table', 'evenements_' + new Date().toISOString().split('T')[0] + '.csv')" 
+                    class="btn-export">
+                📥 Exporter CSV
+            </button>
+        </div>
+        
+        <div class="events-list">
+            <table class="events-table-compact" id="events-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('events-table', 0, true)" style="cursor: pointer;">Horodatage ⇅</th>
+                        <th onclick="sortTable('events-table', 1, true)" style="cursor: pointer;">Type ⇅</th>
+                        <th onclick="sortTable('events-table', 2, true)" style="cursor: pointer;">Campagne ⇅</th>
+                        <th onclick="sortTable('events-table', 3, true)" style="cursor: pointer;">Utilisateur ⇅</th>
+                        <th onclick="sortTable('events-table', 4, true)" style="cursor: pointer;">IP ⇅</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in recent_events %}
+                    <tr>
+                        <td>{{ event['event_timestamp'] }}</td>
+                        <td>
+                            <span class="event-badge event-{{ event['event_type'] }}">
+                                {{ event['event_type'] }}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="/campaign/{{ event['campaign_id'] }}">
+                                {{ event['campaign_name'] }}
+                            </a>
+                        </td>
+                        <td>{{ event['user_email'] }}</td>
+                        <td><code>{{ event['ip'] }}</code></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+// Initialize table filtering
+document.addEventListener('DOMContentLoaded', function() {
+    filterTable('campaigns-search', 'campaigns-table');
+    filterTable('events-search', 'events-table');
+});
+
+function deleteCampaign(campaignId, campaignName) {
+    confirmDelete(
+        `⚠️ ATTENTION - SUPPRESSION DE CAMPAGNE\n\nCampagne: ${campaignName}\n\nCela supprimera:\n• TOUTES les cibles de cette campagne\n• TOUS les événements de cette campagne\n• La campagne elle-même\n\nLes utilisateurs ne seront PAS supprimés (seulement les liens).\n\nCette action est IRRÉVERSIBLE !\n\nCliquez OK pour continuer...`,
+        function() {
+            const confirmation = prompt('Tapez "SUPPRIMER" pour confirmer:');
+            if (confirmation === 'SUPPRIMER') {
+                fetch(`/campaign/${campaignId}/delete`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showNotification(`✅ ${data.message}\n\nSupprimé:\n• ${data.deleted.events} événements\n• ${data.deleted.targets} cibles de campagne`, 'success');
+                        const row = document.getElementById(`campaign-row-${campaignId}`);
+                        if (row) row.remove();
+                        setTimeout(() => location.reload(), 2000);
+                    } else {
+                        showNotification(`❌ Erreur: ${data.message}`, 'error');
+                    }
+                })
+                .catch(error => {
+                    showNotification(`❌ Erreur lors de la suppression: ${error}`, 'error');
+                });
+            } else {
+                showNotification('❌ Suppression annulée - confirmation incorrecte', 'error');
+            }
+        }
+    );
+}
+</script>
+
+{% endblock %}

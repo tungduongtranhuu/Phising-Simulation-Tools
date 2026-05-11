@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚠️ Alerte de Sécurité - Formation Phishing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .awareness-container {
+            background: white;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            text-align: center;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .warning-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        h1 {
+            color: #e74c3c;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .message-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+            border-radius: 6px;
+        }
+
+        .message-box p {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .info-section {
+            background-color: #e8f4f8;
+            border-left: 4px solid #0078d4;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+            border-radius: 6px;
+        }
+
+        .info-section h3 {
+            color: #0078d4;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-section ul {
+            color: #004c87;
+            padding-left: 20px;
+        }
+
+        .info-section li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .stats-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .stats-box h3 {
+            margin-bottom: 10px;
+        }
+
+        .stats-box p {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .stats-box small {
+            opacity: 0.9;
+        }
+
+        .tips-section {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+            border-radius: 6px;
+        }
+
+        .tips-section h3 {
+            color: #155724;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tips-section ul {
+            color: #155724;
+            padding-left: 20px;
+        }
+
+        .tips-section li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .btn-container {
+            margin-top: 30px;
+        }
+
+        .btn-primary {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background-color: #005a9e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 600px) {
+            .awareness-container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .warning-icon {
+                font-size: 60px;
+            }
+
+            .stats-box p {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="awareness-container">
+    <div class="warning-icon">⚠️</div>
+    
+    <h1>Vous avez été capturé !</h1>
+    <p class="subtitle">Ceci était un test de sensibilisation au phishing</p>
+
+    <div class="message-box">
+        <p><strong>🎣 Attention :</strong> Vous venez de cliquer sur un lien d'une campagne de test de phishing.</p>
+        <p>En situation réelle, vos informations personnelles et professionnelles auraient pu être compromises.</p>
+    </div>
+
+    <div class="stats-box">
+        <h3>📊 Saviez-vous que...</h3>
+        <p>91%</p>
+        <small>des cyberattaques commencent par un email de phishing</small>
+    </div>
+
+    <div class="info-section">
+        <h3>🔍 Comment reconnaître un email de phishing ?</h3>
+        <ul>
+            <li><strong>Vérifiez l'expéditeur :</strong> Les adresses email peuvent être facilement falsifiées</li>
+            <li><strong>Méfiez-vous de l'urgence :</strong> Les messages vous pressant d'agir rapidement sont suspects</li>
+            <li><strong>Survolez les liens :</strong> Avant de cliquer, vérifiez l'URL en passant votre souris dessus</li>
+            <li><strong>Fautes d'orthographe :</strong> Les emails légitimes sont généralement bien écrits</li>
+            <li><strong>Demandes inhabituelles :</strong> Soyez vigilant face aux demandes de connexion ou d'informations sensibles</li>
+        </ul>
+    </div>
+
+    <div class="tips-section">
+        <h3>✅ Que faire si vous recevez un email suspect ?</h3>
+        <ul>
+            <li>Ne cliquez sur aucun lien et n'ouvrez aucune pièce jointe</li>
+            <li>Ne répondez pas à l'email</li>
+            <li>Signalez-le à votre équipe de sécurité IT</li>
+            <li>Supprimez l'email de votre boîte de réception</li>
+            <li>En cas de doute, contactez directement l'expéditeur par un autre moyen</li>
+        </ul>
+    </div>
+
+    <div class="btn-container">
+        <a href="https://www.cybermalveillance.gouv.fr/" target="_blank" class="btn-primary">
+            📚 En savoir plus sur la cybersécurité
+        </a>
+    </div>
+
+    <div class="footer">
+        <p><strong>Cette campagne fait partie d'un programme de sensibilisation à la sécurité.</strong></p>
+        <p>Aucune donnée personnelle n'a été collectée. Seul votre clic a été enregistré à des fins statistiques.</p>
+        <p>© 2026 Formation Cybersécurité</p>
+    </div>
+</div>
+
+</body>
+</html>
