@@ -1,0 +1,80 @@
+# TLDs frequently abused for phishing / malware distribution.
+risky_tlds:
+  - zip
+  - mov
+  - top
+  - xyz
+  - click
+  - link
+  - gq
+  - cf
+  - ml
+  - ga
+  - tk
+  - work
+  - rest
+  - fit
+  - country
+  - kim
+  - loan
+  - download
+  - review
+  - stream
+  - cam
+  - monster
+  - quest
+
+# URL shorteners (they hide the true destination).
+shorteners:
+  - bit.ly
+  - tinyurl.com
+  - t.co
+  - goo.gl
+  - ow.ly
+  - is.gd
+  - buff.ly
+  - cutt.ly
+  - rb.gy
+  - shorturl.at
+  - rebrand.ly
+  - t.ly
+
+# Dangerous attachment extensions.
+dangerous_extensions:
+  - exe
+  - scr
+  - com
+  - pif
+  - bat
+  - cmd
+  - js
+  - jse
+  - vbs
+  - vbe
+  - wsf
+  - wsh
+  - hta
+  - jar
+  - ps1
+  - msi
+  - iso
+  - img
+  - lnk
+  - reg
+  - html
+  - htm
+
+# Login/credential-harvest keywords in URL paths.
+login_keywords:
+  - login
+  - signin
+  - verify
+  - secure
+  - account
+  - update
+  - confirm
+  - webscr
+  - password
+  - banking
+  - authenticate
+  - validation

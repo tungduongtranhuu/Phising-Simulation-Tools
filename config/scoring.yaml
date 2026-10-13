@@ -1,0 +1,48 @@
+# Risk scoring weights. Tune these without touching code.
+
+# ── Email analysis (points ADD up; higher = more dangerous) ──────────────
+email:
+  verdict_thresholds:
+    suspicious: 30   # score >= this  -> "suspicious"
+    phishing: 60     # score >= this  -> "phishing"
+  findings:
+    dmarc_fail: 25
+    spf_fail: 15
+    dkim_fail: 10
+    replyto_differs: 15
+    display_name_spoof: 20
+    domain_young: 20          # created < 30 days ago
+    lookalike_domain: 30      # typosquatting / punycode
+    link_text_mismatch: 20
+    url_ip_or_shortener: 10
+    dangerous_attachment: 30  # dangerous / double extension
+    office_macro_autorun: 30
+    vt_detected: 40           # >= 3 engines
+    abuseipdb_high: 15        # sender IP confidence > 50
+    pressure_keywords: 5      # per group, capped
+    financial_keywords: 5
+    generic_greeting: 5
+    keyword_cap: 15           # max total from keyword groups
+  domain_age_days: 30
+
+# ── DNS audit (start at 100, SUBTRACT penalties) ─────────────────────────
+dns:
+  start: 100
+  grades:   # score >= value -> grade
+    A: 90
+    B: 75
+    C: 60
+    D: 40
+  penalties:
+    no_spf: 25
+    spf_pass_all: 30          # +all
+    spf_weak_all: 10          # ?all or > 10 lookups
+    no_dmarc: 25
+    dmarc_p_none: 15
+    zone_transfer_open: 30
+    subdomain_takeover: 25
+    no_dnssec: 10
+    no_dkim: 10
+    no_caa: 3
+    no_mta_sts: 3
+    no_tls_rpt: 3

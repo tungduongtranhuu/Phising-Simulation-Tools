@@ -1,0 +1,32 @@
+# Frequently-impersonated brands and their legitimate root domains.
+# Used for lookalike / typosquatting detection (Levenshtein distance) and
+# display-name-spoof detection (brand word in display name + foreign domain).
+brands:
+  paypal: [paypal.com]
+  microsoft: [microsoft.com, outlook.com, office.com, live.com]
+  apple: [apple.com, icloud.com]
+  google: [google.com, gmail.com]
+  amazon: [amazon.com, amazon.fr]
+  netflix: [netflix.com]
+  facebook: [facebook.com, meta.com]
+  instagram: [instagram.com]
+  linkedin: [linkedin.com]
+  dhl: [dhl.com]
+  fedex: [fedex.com]
+  ups: [ups.com]
+  laposte: [laposte.fr, laposte.net]
+  "chronopost": [chronopost.fr]
+  "impots": [impots.gouv.fr]
+  "ameli": [ameli.fr]
+  "orange": [orange.fr]
+  "free": [free.fr]
+  "sfr": [sfr.fr]
+  "credit-agricole": [credit-agricole.fr]
+  "bnpparibas": [bnpparibas.net, mabanque.bnpparibas]
+  "societegenerale": [societegenerale.fr]
+  "docusign": [docusign.com, docusign.net]
+  "dropbox": [dropbox.com]
+  "adobe": [adobe.com]
+
+# Max Levenshtein distance from a brand root to flag as lookalike.
+max_distance: 2

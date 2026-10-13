@@ -1,0 +1,23 @@
+From: "GitHub" <noreply@github.com>
+Reply-To: noreply@github.com
+Return-Path: <bounce@github.com>
+To: user@example.com
+Subject: Your weekly digest from GitHub
+Date: Mon, 13 Oct 2026 08:00:00 +0000
+Message-ID: <digest-20261013@github.com>
+Authentication-Results: mx.example.com; spf=pass smtp.mailfrom=github.com;
+ dkim=pass header.d=github.com; dmarc=pass header.from=github.com
+Received: from out.github.com (192.30.252.200)
+ by mx.example.com with ESMTPS; Mon, 13 Oct 2026 08:00:00 +0000
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+
+<html>
+<body>
+<p>Hi there,</p>
+<p>Here is your weekly activity digest. You have 3 new notifications across
+your repositories.</p>
+<p><a href="https://github.com/notifications">View your notifications</a></p>
+<p>You are receiving this because you are watching repositories on GitHub.</p>
+</body>
+</html>

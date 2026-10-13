@@ -1,0 +1,30 @@
+From: "Comptabilite" <accounts@billing-notice.top>
+Reply-To: accounts@billing-notice.top
+Return-Path: <accounts@billing-notice.top>
+To: finance@example.com
+Subject: Facture impayee - paiement urgent requis
+Date: Mon, 13 Oct 2026 11:02:00 +0200
+Message-ID: <inv-7781@billing-notice.top>
+Authentication-Results: mx.example.com; spf=softfail smtp.mailfrom=billing-notice.top;
+ dkim=none; dmarc=none
+Received: from unknown (HELO billing-notice.top) (45.133.1.90)
+ by mx.example.com with SMTP; Mon, 13 Oct 2026 11:02:00 +0200
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="SEP"
+
+--SEP
+Content-Type: text/plain; charset="utf-8"
+
+Bonjour,
+
+Veuillez trouver ci-joint votre facture impayee. Le paiement est urgent.
+Le mot de passe de l'archive est: 2026
+
+Cordialement.
+--SEP
+Content-Type: application/octet-stream; name="facture.pdf.exe"
+Content-Disposition: attachment; filename="facture.pdf.exe"
+Content-Transfer-Encoding: base64
+
+TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAA=
+--SEP--

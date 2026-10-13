@@ -1,0 +1,35 @@
+<!--
+  Custom Wazuh rules. Install on the MANAGER at:
+    /var/ossec/etc/rules/local_rules.xml
+  Validate with: /var/ossec/bin/wazuh-logtest  (paste a sample alert line)
+-->
+<group name="phishguard,">
+
+  <rule id="100200" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="tool">phishguard</field>
+    <description>PhishGuard: analysis event</description>
+  </rule>
+
+  <rule id="100201" level="7">
+    <if_sid>100200</if_sid>
+    <field name="verdict">suspicious</field>
+    <description>PhishGuard: suspicious email from $(sender_domain)</description>
+    <mitre><id>T1566</id></mitre>
+  </rule>
+
+  <rule id="100202" level="12">
+    <if_sid>100200</if_sid>
+    <field name="verdict">phishing</field>
+    <description>PhishGuard: phishing detected from $(sender_domain), score $(score)</description>
+    <mitre><id>T1566</id></mitre>
+  </rule>
+
+  <rule id="100210" level="10">
+    <if_sid>100200</if_sid>
+    <field name="module">dns</field>
+    <field name="grade">F</field>
+    <description>PhishGuard: critical DNS configuration for $(domain)</description>
+  </rule>
+
+</group>

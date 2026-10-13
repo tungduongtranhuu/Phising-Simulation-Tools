@@ -1,0 +1,43 @@
+# Suspicious content keywords (FR + EN). Case-insensitive substring match.
+pressure:
+  - urgent
+  - immediately
+  - immédiatement
+  - action required
+  - action requise
+  - dernier avis
+  - last warning
+  - compte suspendu
+  - account suspended
+  - account locked
+  - compte bloqué
+  - verify now
+  - vérifiez
+  - within 24 hours
+  - sous 24 heures
+  - expire
+
+financial:
+  - virement
+  - wire transfer
+  - facture impayée
+  - unpaid invoice
+  - remboursement
+  - refund
+  - gift card
+  - carte cadeau
+  - payment
+  - paiement
+  - bank account
+  - compte bancaire
+  - bitcoin
+  - cryptocurrency
+
+generic_greeting:
+  - dear customer
+  - dear user
+  - cher client
+  - chère cliente
+  - dear sir/madam
+  - valued customer
+  - account holder

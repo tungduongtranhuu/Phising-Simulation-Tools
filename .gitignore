@@ -1,0 +1,36 @@
+# Secrets — never commit API keys
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# Caches
+.cache/
+*.sqlite
+*.db
+.pytest_cache/
+.ruff_cache/
+
+# Tool output
+/var/log/phishguard/
+alerts.json
+report.html
+report.json
+
+# Personal / sensitive test data — do NOT commit real personal emails.
+# Synthetic examples prefixed with example_ are allowed.
+samples/legit/*.eml
+!samples/legit/example_*.eml
+samples/private/
+
+# OS
+.DS_Store
+Thumbs.db

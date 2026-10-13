@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PhishGuard report — {{ r.file if kind == 'email' else r.domain }}</title>
+<style>
+  :root { --bg:#0f141a; --card:#1a222c; --fg:#e6edf3; --muted:#8b98a5; --line:#2a333f;
+          --green:#2ea043; --amber:#d29922; --red:#f85149; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font:15px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; padding:24px; }
+  .wrap { max-width:960px; margin:0 auto; }
+  h1 { font-size:20px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 20px; }
+  .verdict { display:inline-block; padding:6px 16px; border-radius:6px; font-weight:700;
+             font-size:18px; text-transform:uppercase; letter-spacing:.5px; }
+  .v-phishing, .v-F { background:var(--red); color:#fff; }
+  .v-suspicious, .v-D, .v-C { background:var(--amber); color:#000; }
+  .v-clean, .v-A, .v-B { background:var(--green); color:#fff; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px;
+          padding:16px 20px; margin:16px 0; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; }
+  .kv b { color:var(--muted); font-weight:500; display:block; font-size:12px; }
+  table { width:100%; border-collapse:collapse; }
+  th,td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line);
+          vertical-align:top; font-size:14px; }
+  th { color:var(--muted); font-weight:600; }
+  .sev-critical,.sev-high { color:var(--red); font-weight:700; }
+  .sev-medium { color:var(--amber); }
+  .sev-low,.sev-info { color:var(--muted); }
+  .rec { color:var(--muted); font-size:13px; }
+  code { background:#0b0f14; padding:2px 6px; border-radius:4px; font-size:13px;
+         word-break:break-all; }
+  .foot { color:var(--muted); font-size:12px; margin-top:24px; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f6f8fa; --card:#fff; --fg:#1f2328; --muted:#636c76; --line:#d0d7de; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+{% if kind == 'email' %}
+  <h1>Email analysis — {{ r.file }}</h1>
+  <p class="sub">{{ r.timestamp }}</p>
+  <div class="card">
+    <span class="verdict v-{{ r.verdict }}">{{ r.verdict }}</span>
+    <span style="margin-left:14px; font-size:22px; font-weight:700;">Score {{ r.score }}</span>
+  </div>
+  <div class="card grid">
+    <div class="kv"><b>Subject</b>{{ r.subject or '(none)' }}</div>
+    <div class="kv"><b>Sender</b>{{ r.sender or '(unknown)' }}</div>
+    <div class="kv"><b>Sender domain</b>{{ r.sender_domain or '-' }}</div>
+    <div class="kv"><b>Sender IP</b>{{ r.sender_ip | defang_ip or '-' }}</div>
+    <div class="kv"><b>SPF</b>{{ r.auth.spf or '?' }}</div>
+    <div class="kv"><b>DKIM</b>{{ r.auth.dkim or '?' }}</div>
+    <div class="kv"><b>DMARC</b>{{ r.auth.dmarc or '?' }}</div>
+    <div class="kv"><b>MITRE ATT&CK</b>{{ r.mitre | join(', ') or '-' }}</div>
+  </div>
+{% else %}
+  <h1>DNS security audit — {{ r.domain }}</h1>
+  <p class="sub">{{ r.timestamp }}</p>
+  <div class="card">
+    <span class="verdict v-{{ r.grade }}">Grade {{ r.grade }}</span>
+    <span style="margin-left:14px; font-size:22px; font-weight:700;">{{ r.score }}/100</span>
+  </div>
+{% endif %}
+
+  <div class="card">
+    <h3 style="margin-top:0;">Findings ({{ r.findings | length }})</h3>
+    {% if r.findings %}
+    <table>
+      <tr><th>ID</th><th>Severity</th><th>Finding</th><th>Pts</th></tr>
+      {% for f in r.findings | sort(attribute='points', reverse=true) %}
+      <tr>
+        <td>{{ f.id }}</td>
+        <td class="sev-{{ f.severity.value }}">{{ f.severity.value }}</td>
+        <td>{{ f.title }}
+          {% if f.detail %}<br><code>{{ f.detail }}</code>{% endif %}
+          {% if f.recommendation %}<div class="rec">→ {{ f.recommendation }}</div>{% endif %}
+        </td>
+        <td>{{ f.points }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}<p>No issues found.</p>{% endif %}
+  </div>
+
+{% if kind == 'email' %}
+  <div class="card">
+    <h3 style="margin-top:0;">Indicators of Compromise (defanged)</h3>
+    <table>
+      {% for u in r.iocs.urls %}<tr><td>URL</td><td><code>{{ u | defang }}</code></td></tr>{% endfor %}
+      {% for ip in r.iocs.ips %}<tr><td>IP</td><td><code>{{ ip | defang_ip }}</code></td></tr>{% endfor %}
+      {% for h in r.iocs.hashes %}<tr><td>SHA256</td><td><code>{{ h }}</code></td></tr>{% endfor %}
+      {% if not r.iocs.urls and not r.iocs.ips and not r.iocs.hashes %}
+      <tr><td colspan="2">None extracted.</td></tr>{% endif %}
+    </table>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0;">Recommended response actions</h3>
+    <ul class="rec">
+      <li>Block the sender domain and any malicious URLs/IPs at the mail gateway and proxy.</li>
+      <li>Search mailboxes for the same message and purge all copies.</li>
+      <li>If a user clicked or submitted credentials: force a password reset and review sign-in logs.</li>
+      <li>Add the extracted IOCs to your blocklists / SIEM watchlists.</li>
+    </ul>
+  </div>
+{% endif %}
+
+  <p class="foot">Generated by PhishGuard — static analysis only. IOCs are defanged;
+     never click links or open attachments from analysed samples.</p>
+</div>
+</body>
+</html>

@@ -1,8 +1,18 @@
-blinker==1.9.0
-click==8.3.1
-Flask==3.1.2
-itsdangerous==2.2.0
-Jinja2==3.1.6
-MarkupSafe==3.0.3
-Werkzeug==3.1.5
-python-dotenv==1.0.1
+# Core dependencies (required)
+typer>=0.12
+rich>=13.7
+dnspython>=2.6
+beautifulsoup4>=4.12
+tldextract>=5.1
+requests>=2.31
+pyyaml>=6.0
+python-dotenv>=1.0
+jinja2>=3.1
+
+# Optional (install with:  pip install -e ".[full]")
+# Tool runs without them — related checks are skipped gracefully.
+# dkimpy>=1.1
+# python-whois>=0.9
+# python-magic-bin>=0.4   ; Windows
+# python-magic>=0.4       ; Linux/macOS (needs libmagic)
+# oletools>=0.60

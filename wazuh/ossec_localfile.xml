@@ -1,0 +1,9 @@
+<!--
+  Add this block to the Wazuh agent's ossec.conf on the host running PhishGuard
+  (inside the top-level <ossec_config> element). It tells the agent to read the
+  NDJSON alert file PhishGuard writes with `--siem`.
+-->
+<localfile>
+  <log_format>json</log_format>
+  <location>/var/log/phishguard/alerts.json</location>
+</localfile>

@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "phishguard"
+version = "0.1.0"
+description = "Static phishing email analysis and DNS security audit tool for blue teams / SOC"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "TRAN Huu Tung Duong" }]
+keywords = ["phishing", "dns", "spf", "dmarc", "dkim", "soc", "wazuh", "threat-intelligence"]
+
+dependencies = [
+    "typer>=0.12",
+    "rich>=13.7",
+    "dnspython>=2.6",
+    "beautifulsoup4>=4.12",
+    "tldextract>=5.1",
+    "requests>=2.31",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0",
+    "jinja2>=3.1",
+]
+
+[project.optional-dependencies]
+# Optional enrichment / deep-inspection libraries. The tool degrades gracefully
+# when these are not installed (features are skipped, not crashed).
+full = [
+    "dkimpy>=1.1",
+    "python-whois>=0.9",
+    "python-magic-bin>=0.4; sys_platform == 'win32'",
+    "python-magic>=0.4; sys_platform != 'win32'",
+    "oletools>=0.60",
+]
+dev = ["pytest>=8.0", "ruff>=0.4", "black>=24.0"]
+
+[project.scripts]
+phishguard = "phishguard.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["phishguard*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.black]
+line-length = 100

